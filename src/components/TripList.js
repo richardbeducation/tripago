@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react'
-
-// Styles
 import './TripList.css'  
 
 export default function TripList() {
   const [trips, setTrips] = useState([])
+  const [url, setUrl] = useState('http://localhost:3000/trips')
 
   useEffect(() => {
-    fetch('http://localhost:3000/trips')
+    fetch(url)
     .then(response => response.json())
     .then(json => setTrips(json))
-  }, [])
+  }, [url])
 
   console.log(trips) 
 
@@ -25,6 +24,14 @@ export default function TripList() {
           </li>
         ))}
       </ul>
+      <div className="filters">
+        <button onClick={() => setUrl('http://localhost:3000/trips?loc=europe')}>
+          European Trips
+        </button>
+        <button onClick={() => setUrl('http://localhost:3000/trips')}>
+          All Trips
+        </button>
+      </div>
     </div>
   )
 }
